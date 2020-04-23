@@ -6,8 +6,11 @@ def fill(request):
     lines = f.readlines()
     pulsars = []
     for line in lines:
-        pulsars.append(line)
-        if "README.txt" in lines:
+        psrs = line.rstrip().split(',')
+        for psr in psrs:
+            if not "READ" in psr and not "search" and not "J0000" in psr:
+                pulsars.append(psr)
+        if "README.txt" in line:
             break
     f.close()
     return HttpResponse("Database changes <br /> {}".format(pulsars))

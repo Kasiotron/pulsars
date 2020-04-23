@@ -8,7 +8,7 @@ def fill(request):
     for line in lines:
         psrs = line.rstrip().split(',')
         for psr in psrs:
-            if not "READ" in psr and not "search" and not "J0000" in psr:
+            if not "READ" in psr and not "search" in psr and not "J0000" in psr:
                 pulsars.append(psr)
         if "README.txt" in line:
             break

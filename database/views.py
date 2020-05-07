@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from database.models import Pulsar
+import psrqpy
+
+q = psrqpy.QueryATNF(params='P0', 'P1', 'F0', 'F1', 'F2', 'F3', 'DM', 'DM1', 'RM', 'W50', 'W10', 'S400', 'S1400', 'S2000', 'Dist', 'Age', 'Bsurf', 'Edot')
 
 def fill(request):
     f = open("database/static/list.txt")

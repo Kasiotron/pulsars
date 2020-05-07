@@ -19,6 +19,15 @@ def fill(request):
     f.close()
 
     # TODO psrqpy
+    all = psrqpy.PSR_ALL_PARS
+    atrs = Pulsar.__dict__.keys()
+    attrs = []
+    for at in atrs:
+        if at.upper() in all:
+            attrs.append(at.upper())
+    #print(len(pulsars))
+    q = psrqpy.QueryATNF(params=attrs, psrs=pulsars)
+    print(q.table["P0"])
 
     for ps in pulsars:
         p = Pulsar.objects.filter(Name=ps)
@@ -32,7 +41,6 @@ def fill(request):
             for val in vals:
                 attr = getattr(psr, val)
                 if attr == None:
-                    #q = psrqpy.QueryATNF(params=[val], psrs=[psr.Name])
                     #print(q.table)
                     pass
             pass

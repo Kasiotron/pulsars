@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from database.models import Pulsar
 import psrqpy
 
-q = psrqpy.QueryATNF(params='P0', 'P1', 'F0', 'F1', 'F2', 'F3', 'DM', 'DM1', 'RM', 'W50', 'W10', 'S400', 'S1400', 'S2000', 'Dist', 'Age', 'Bsurf', 'Edot')
+#q = psrqpy.QueryATNF(params='P0', 'P1', 'F0', 'F1', 'F2', 'F3', 'DM', 'DM1', 'RM', 'W50', 'W10', 'S400', 'S1400', 'S2000', 'Dist', 'Age', 'Bsurf', 'Edot')
 
 def fill(request):
     f = open("database/static/list.txt")
@@ -18,16 +18,23 @@ def fill(request):
             break
     f.close()
 
+    # TODO psrqpy
 
     for ps in pulsars:
         p = Pulsar.objects.filter(Name=ps)
         if len(p) == 0:
             psr = Pulsar(Name=ps)
             psr.save()
-        else:
+        elif len(p) == 1:
             # new values
-
-            #print("already added")
+            psr = p[0]
+            vals = psr.__dict__.keys()
+            for val in vals:
+                attr = getattr(psr, val)
+                if attr == None:
+                    #q = psrqpy.QueryATNF(params=[val], psrs=[psr.Name])
+                    #print(q.table)
+                    pass
             pass
 
 

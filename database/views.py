@@ -27,7 +27,14 @@ def fill(request):
             attrs.append(at.upper())
     #print(len(pulsars))
     q = psrqpy.QueryATNF(params=attrs, psrs=pulsars)
-    print(q.table["P0"])
+    cat = q.catalogue
+    #print(q.table["P0"])
+    #print(q.catalogue.columns)
+    #for c in q.catalogue.columns:
+    #    print(c)
+    res = cat.loc[cat["NAME"]==pulsars[0]]
+    print(res)
+    print(res["RAJ"])
 
     for ps in pulsars:
         p = Pulsar.objects.filter(Name=ps)

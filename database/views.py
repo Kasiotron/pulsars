@@ -31,20 +31,16 @@ def fill(request):
     #print(q.catalogue.columns)
     #for c in q.catalogue.columns:
     #    print(c)
-    psrs = Pulsar.objects.all()
-    for psr in psrs:
-        psr.delete()
 
     for ps in pulsars:
         p = Pulsar.objects.filter(NAME=ps)
         if len(p) == 0:
             psr = Pulsar(NAME=ps)
-            """
-            res = cat.loc[cat["NAME"]==ps]
-            print(res)
+            res = cat.loc[cat["NAME"]==psr.NAME]
             for atr in attrs:
-                print(atr)
-            """
+                new_vals = getattr(res, atr).values
+                if len(new_vals) > 0:
+                    setattr(psr, atr, new_vals[0])
             psr.save()
         elif len(p) == 1:
             # new values

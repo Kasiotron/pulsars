@@ -33,3 +33,8 @@ class Pulsar(models.Model):
     S400_rr = models.FloatField(null=True, help_text="")
     S1400_rr = models.FloatField(null=True, help_text="")
     S2000_rr = models.FloatField(null=True, help_text="")
+
+
+class Observation(models.Model):
+    
+    pass

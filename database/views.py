@@ -27,10 +27,6 @@ def fill(request):
             attrs.append(at.upper())
     q = psrqpy.QueryATNF(params=attrs, psrs=pulsars)
     cat = q.catalogue
-    #print(q.table["P0"])
-    #print(q.catalogue.columns)
-    #for c in q.catalogue.columns:
-    #    print(c)
 
     for ps in pulsars:
         p = Pulsar.objects.filter(NAME=ps)
@@ -46,17 +42,11 @@ def fill(request):
             # new values
             psr = p[0]
             res = cat.loc[cat["NAME"]==psr.NAME]
-            #print(res)
             for atr in attrs:
                 val = getattr(psr, atr)
-                #print(atr, val)
                 if val == None:
                     new_vals = getattr(res, atr).values
                     if len(new_vals) > 0:
                         setattr(psr, atr, new_vals[0])
             psr.save()
     return HttpResponse("Database changes <br /> {}".format(1))
-
-
-def add_value(atr, cat):
-    pass

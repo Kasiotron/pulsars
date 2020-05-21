@@ -1,7 +1,7 @@
 from django.db import models
 
 class Pulsar(models.Model):
-    Name = models.CharField(max_length=200, help_text="Pulsar name.  The B name if exists, otherwise the J name.")
+    NAME = models.CharField(max_length=200, help_text="Pulsar name.  The B name if exists, otherwise the J name.", null=True)
     P0 = models.DecimalField(max_digits=32, decimal_places=30, null=True, help_text="Barycentric period of the pulsar (s)")
     P1 = models.FloatField(null=True, help_text="Time derivative of barcycentric period (dimensionless)")
     F0 = models.DecimalField(max_digits=36, decimal_places=30, null=True, help_text="Barycentric rotation frequency (Hz)")
@@ -16,10 +16,10 @@ class Pulsar(models.Model):
     S400 = models.FloatField(null=True, help_text="Mean flux density at 400 MHz (mJy)")
     S1400 = models.FloatField(null=True, help_text="Mean flux density at 1400 MHz (mJy)")
     S2000 = models.FloatField(null=True, help_text="Mean flux density at 2000 MHz (mJy)")
-    Dist = models.FloatField(null=True, help_text="Best estimate of the pulsar distance using the YMW16 DM-based distance as default (kpc)")
-    Age = models.FloatField(null=True, help_text="Spin down age (yr)")
-    Bsurf = models.FloatField(null=True, help_text="Surface magnetic flux density (Gauss)")
-    Edot = models.FloatField(null=True, help_text="Spin down energy loss rate (ergs/s)")
+    DIST = models.FloatField(null=True, help_text="Best estimate of the pulsar distance using the YMW16 DM-based distance as default (kpc)")
+    AGE = models.FloatField(null=True, help_text="Spin down age (yr)")
+    BSURF = models.FloatField(null=True, help_text="Surface magnetic flux density (Gauss)")
+    EDOT = models.FloatField(null=True, help_text="Spin down energy loss rate (ergs/s)")
     P0_rr = models.FloatField(null=True, help_text="")
     P1_rr = models.FloatField(null=True, help_text="")
     F1_rr = models.FloatField(null=True, help_text="")

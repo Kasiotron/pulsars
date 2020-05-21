@@ -25,32 +25,42 @@ def fill(request):
     for at in atrs:
         if at.upper() in all:
             attrs.append(at.upper())
-    #print(len(pulsars))
     q = psrqpy.QueryATNF(params=attrs, psrs=pulsars)
     cat = q.catalogue
     #print(q.table["P0"])
     #print(q.catalogue.columns)
     #for c in q.catalogue.columns:
     #    print(c)
-    res = cat.loc[cat["NAME"]==pulsars[0]]
-    print(res)
-    print(res["RAJ"])
+    psrs = Pulsar.objects.all()
+    for psr in psrs:
+        psr.delete()
 
     for ps in pulsars:
-        p = Pulsar.objects.filter(Name=ps)
+        p = Pulsar.objects.filter(NAME=ps)
         if len(p) == 0:
-            psr = Pulsar(Name=ps)
+            psr = Pulsar(NAME=ps)
+            """
+            res = cat.loc[cat["NAME"]==ps]
+            print(res)
+            for atr in attrs:
+                print(atr)
+            """
             psr.save()
         elif len(p) == 1:
             # new values
             psr = p[0]
-            vals = psr.__dict__.keys()
-            for val in vals:
-                attr = getattr(psr, val)
-                if attr == None:
-                    #print(q.table)
-                    pass
-            pass
-
-
+            res = cat.loc[cat["NAME"]==psr.NAME]
+            #print(res)
+            for atr in attrs:
+                val = getattr(psr, atr)
+                #print(atr, val)
+                if val == None:
+                    new_vals = getattr(res, atr).values
+                    if len(new_vals) > 0:
+                        setattr(psr, atr, new_vals[0])
+            psr.save()
     return HttpResponse("Database changes <br /> {}".format(1))
+
+
+def add_value(atr, cat):
+    pass

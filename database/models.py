@@ -36,5 +36,8 @@ class Pulsar(models.Model):
 
 
 class Observation(models.Model):
-    
+    # start_datetime
+    # frequancy
+    # length
+    # pulses
     pass

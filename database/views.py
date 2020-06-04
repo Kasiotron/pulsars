@@ -52,13 +52,5 @@ def fill(request):
     return HttpResponse("Database changes <br /> {}".format(1))
 
 def view_all(request):
-    f = open("database/static/list.txt")
-    lines = f.readlines()
-    pulsars = []
-    for line in lines:
-        psrs = line.strip().split(',')
-        for psr in psrs:
-            if not "READ" in psr and not "search" in psr and not "J0000" in psr and psr != '':
-                pulsars.append(psr.strip())
-
+    pulsars = Pulsar.objects.all
     return HttpResponse("Database changes <br /> {}".format(pulsars))

@@ -50,3 +50,8 @@ def fill(request):
                         setattr(psr, atr, new_vals[0])
             psr.save()
     return HttpResponse("Database changes <br /> {}".format(1))
+
+def view_all(request):
+
+
+    return HttpResponse("Database changes <br /> {}".format(1))

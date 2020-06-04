@@ -1,5 +1,13 @@
 from django.db import models
 
+
+class Observation(models.Model):
+    start_datetime = models.DateField(null=True, help_text="")
+    frequency = models.FloatField(null=True, help_text="")
+    length = models.FloatField(null=True, help_text="")
+    pulses = models.IntegerField(null=True, help_text="")
+
+    
 class Pulsar(models.Model):
     NAME = models.CharField(max_length=200, help_text="Pulsar name.  The B name if exists, otherwise the J name.", null=True)
     P0 = models.DecimalField(max_digits=32, decimal_places=30, null=True, help_text="Barycentric period of the pulsar (s)")
@@ -34,10 +42,4 @@ class Pulsar(models.Model):
     S1400_rr = models.FloatField(null=True, help_text="")
     S2000_rr = models.FloatField(null=True, help_text="")
 
-
-class Observation(models.Model):
-    start_datetime = models.DateField(null=True, help_text="")
-    frequency = models.FloatField(null=True, help_text="")
-    length = models.FloatField(null=True, help_text="")
-    pulses = models.IntegerField(null=True, help_text="")
-    pass
+    observations = models.ManyToManyField(Observation)

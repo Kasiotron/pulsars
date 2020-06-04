@@ -36,8 +36,8 @@ class Pulsar(models.Model):
 
 
 class Observation(models.Model):
-    # start_datetime
-    # frequancy
-    # length
-    # pulses
+    start_datetime = models.DateField(null=True, help_text="")
+    frequency = models.FloatField(null=True, help_text="")
+    length = models.FloatField(null=True, help_text="")
+    pulses = models.IntegerField(null=True, help_text="")
     pass

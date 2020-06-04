@@ -52,5 +52,6 @@ def fill(request):
     return HttpResponse("Database changes <br /> {}".format(1))
 
 def view_all(request):
-    pulsars = Pulsar.objects.all
+    pulsars = Pulsar.objects.all()
+    print(pulsars)
     return HttpResponse("Database changes <br /> {}".format(pulsars))

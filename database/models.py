@@ -7,8 +7,10 @@ class Observation(models.Model):
     length = models.FloatField(null=True, help_text="")
     pulses = models.IntegerField(null=True, help_text="")
 
-    
+
 class Pulsar(models.Model):
+    def __str__(self):
+        return "{}".format(self.NAME)
     NAME = models.CharField(max_length=200, help_text="Pulsar name.  The B name if exists, otherwise the J name.", null=True)
     P0 = models.DecimalField(max_digits=32, decimal_places=30, null=True, help_text="Barycentric period of the pulsar (s)")
     P1 = models.FloatField(null=True, help_text="Time derivative of barcycentric period (dimensionless)")

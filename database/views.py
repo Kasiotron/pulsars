@@ -2,12 +2,31 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from database.models import Pulsar
 import psrqpy
+import re
 
 #q = psrqpy.QueryATNF(params='P0', 'P1', 'F0', 'F1', 'F2', 'F3', 'DM', 'DM1', 'RM', 'W50', 'W10', 'S400', 'S1400', 'S2000', 'Dist', 'Age', 'Bsurf', 'Edot')
 
 def fill2(request):
     f = open("database/static/list.txt")
-
+    lines = f.readlines()
+    pulsar_dict = {}
+    for i, line in enumerate(lines):
+        checked_line = re.search('/fred/oz005.search/(.*)(.*)/1284', line)
+        if checked_line:
+            pulsar_key = checked_line.group(1)
+            datetime_list = checked_line.group(2).split('-')
+            pulsar_dict[pulsar_key] = {
+                'date': '-'.join(datetime_list[0:3]),
+                'start_time': datetime_list[3]
+                }
+        if 'obs.finished' in lines[i]:
+            try:
+                endtime = lines[i-1].split(',')[-2].split('-')[-1].split('.')[0]  #naprawic
+            except:
+                print('asd')
+                print(lines[i-1].split(','))
+            if endtime:
+                pulsar_dict[pulsar_key]['end_time'] = endtime
     return HttpResponse("Database changes <br /> {}".format(1))
 
 

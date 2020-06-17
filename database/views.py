@@ -35,6 +35,10 @@ def fill2(request):
                 print(lines[i-1].split(','))
             if endtime:
                 pulsar_dict[pulsar_key]['end_time'] = endtime
+    for p, rest in pulsar_dict.items():
+        p = Pulsar.objects.get(NAME=pulsar_key)
+        date = rest[date]
+        ######
     return HttpResponse("Database changes <br /> {}".format(pulsar_dict))
 
 

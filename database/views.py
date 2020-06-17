@@ -19,15 +19,17 @@ def fill2(request):
             #pulsar_key = checked_line.group(1)
             #datetime_list = checked_line.group(2).split('-')
             datetime_list = checked_line.split("/")[5]
+            freq = checked_line.split("/")[6][:-2]
             #print(pulsar_key)
             #print(datetime_list)
+            print(freq)
             pulsar_dict[pulsar_key] = {
                 'date': datetime_list[0:10],
                 'start_time': datetime_list[11:19]
                 }
-        if 'obs.finished' in lines[i]:
+        if 'obs.header' in lines[i]:
             try:
-                endtime = lines[i-1].split(',')[-2].split('-')[-1].split('.')[0]  #naprawic
+                endtime = lines[i-1].split(',')[-2].split('-')[-1].split('.')[0]  # # # naprawic
             except:
                 print('asd')
                 print(lines[i-1].split(','))

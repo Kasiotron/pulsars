@@ -13,8 +13,14 @@ def fill2(request):
     for i, line in enumerate(lines):
         checked_line = re.search('/fred/oz005.search/(.*)(.*)/1284', line)
         if checked_line:
-            pulsar_key = checked_line.group(1)
-            datetime_list = checked_line.group(2).split('-')
+            checked_line = checked_line.string
+            print(checked_line)
+            pulsar_key = checked_line.split("/")[4]
+            #pulsar_key = checked_line.group(1)
+            #datetime_list = checked_line.group(2).split('-')
+            datetime_list = checked_line.split("/")[5]
+            #print(pulsar_key)
+            #print(datetime_list)
             pulsar_dict[pulsar_key] = {
                 'date': '-'.join(datetime_list[0:3]),
                 'start_time': datetime_list[3]
@@ -27,7 +33,7 @@ def fill2(request):
                 print(lines[i-1].split(','))
             if endtime:
                 pulsar_dict[pulsar_key]['end_time'] = endtime
-    return HttpResponse("Database changes <br /> {}".format(1))
+    return HttpResponse("Database changes <br /> {}".format(pulsar_dict))
 
 
 def fill(request):

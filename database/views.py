@@ -40,7 +40,7 @@ def fill2(request):
             p = Pulsar.objects.get(NAME=k)
         except:
             print("Pulsar {} not found...".format(k))
-        #o = Observation(start_datetime=v["date"], )
+        #o = Observation(start_datetime=v["date"], start_time=v["start_time"])
         #o.save()
         #p.observations.add(o)
         ######

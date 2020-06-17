@@ -14,7 +14,7 @@ def fill2(request):
         checked_line = re.search('/fred/oz005.search/(.*)(.*)/1284', line)
         if checked_line:
             checked_line = checked_line.string
-            print(checked_line)
+            #print(checked_line)
             pulsar_key = checked_line.split("/")[4]
             #pulsar_key = checked_line.group(1)
             #datetime_list = checked_line.group(2).split('-')
@@ -22,7 +22,7 @@ def fill2(request):
             freq = checked_line.split("/")[6][:-2]
             #print(pulsar_key)
             #print(datetime_list)
-            print(freq)
+            #print(freq)
             pulsar_dict[pulsar_key] = {
                 'date': datetime_list[0:10],
                 'start_time': datetime_list[11:19]
@@ -35,9 +35,14 @@ def fill2(request):
                 print(lines[i-1].split(','))
             if endtime:
                 pulsar_dict[pulsar_key]['end_time'] = endtime
-    for p, rest in pulsar_dict.items():
-        p = Pulsar.objects.get(NAME=pulsar_key)
-        date = rest[date]
+    for k, v in pulsar_dict.items():
+        try:
+            p = Pulsar.objects.get(NAME=k)
+        except:
+            print("Pulsar {} not found...".format(k))
+        #o = Observation(start_datetime=v["date"], )
+        #o.save()
+        #p.observations.add(o)
         ######
     return HttpResponse("Database changes <br /> {}".format(pulsar_dict))
 

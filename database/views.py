@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from database.models import Pulsar
 import psrqpy
 import re
+import datetime
+
 
 #q = psrqpy.QueryATNF(params='P0', 'P1', 'F0', 'F1', 'F2', 'F3', 'DM', 'DM1', 'RM', 'W50', 'W10', 'S400', 'S1400', 'S2000', 'Dist', 'Age', 'Bsurf', 'Edot')
 
@@ -24,8 +26,11 @@ def fill2(request):
             #print(datetime_list)
             #print(freq)
             pulsar_dict[pulsar_key] = {
-                'date': datetime_list[0:10],
-                'start_time': datetime_list[11:19]
+                #'date': datetime_list[0:10],
+                'start_time': datetime_list[11:19],
+                'start_datetime': datetime_list[0:19],
+                'freq': freq,
+                'end_time': datetime_list[11:19] # TODO !
                 }
         if 'obs.header' in lines[i]:
             try:
@@ -35,12 +40,22 @@ def fill2(request):
                 print(lines[i-1].split(','))
             if endtime:
                 pulsar_dict[pulsar_key]['end_time'] = endtime
+
     for k, v in pulsar_dict.items():
         try:
             p = Pulsar.objects.get(NAME=k)
         except:
             print("Pulsar {} not found...".format(k))
-        #o = Observation(start_datetime=v["date"], start_time=v["start_time"])
+
+        #print(v["start_datetime"])
+        print(v)
+        st = datetime.datetime.strptime(v["start_datetime"], "%Y-%m-%d-%H:%M:%S")
+        en_str = "{}-{}-{}-{}".format(st.year, st.month, st.day, v["end_time"])
+        print(en_str)
+        #en = datetime.datetime.strptime(en_str, "%Y-%m-%d-%H:%M:%S")
+        #print(en-st)
+
+        #o = Observation(start_datetime=v["start_datetime"], frequancy=v["freq"],  )
         #o.save()
         #p.observations.add(o)
         ######

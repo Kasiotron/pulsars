@@ -22,8 +22,8 @@ def fill2(request):
             #print(pulsar_key)
             #print(datetime_list)
             pulsar_dict[pulsar_key] = {
-                'date': '-'.join(datetime_list[0:3]),
-                'start_time': datetime_list[3]
+                'date': datetime_list[0:10],
+                'start_time': datetime_list[11:19]
                 }
         if 'obs.finished' in lines[i]:
             try:
